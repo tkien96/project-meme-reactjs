@@ -1,0 +1,1 @@
+base_url=http://api-meme-zendvn-01.herokuapp.com/api
