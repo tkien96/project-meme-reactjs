@@ -1,13 +1,14 @@
 import cls from 'classnames'
+import Icon from '../Shared/Icon'
 
 export default function Button ({
   type = 'default',
-  size,
   as = 'button',
   htmlType,
   className,
   children,
-  onClick,
+  icon,
+  iconPos,
   ...restProps
 }) {
   const classes = cls('ass1-btn', {
@@ -23,7 +24,11 @@ export default function Button ({
 
   if (as === 'a') {
     return (
-      <a {...injectedProps}>{ children }</a>
+      <a {...injectedProps}>
+        {iconPos === 'left' && <Icon className={icon} />}
+        { children }
+        {iconPos === 'right' && <Icon className={icon} />}
+      </a>
     )
   }
 
