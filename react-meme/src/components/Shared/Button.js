@@ -1,5 +1,7 @@
 import cls from 'classnames'
+import { Link } from 'react-router-dom'
 import Icon from '../Shared/Icon'
+import IconLoading from '../Shared/IconLoading'
 
 export default function Button ({
   type = 'default',
@@ -9,6 +11,8 @@ export default function Button ({
   children,
   icon,
   iconPos,
+  loading,
+  loadingPos = 'left',
   ...restProps
 }) {
   const classes = cls('ass1-btn', {
@@ -22,17 +26,25 @@ export default function Button ({
     ...restProps
   }
 
+  const content = (
+    <>
+      {loading && loadingPos === 'left' && <IconLoading width="20" />}
+      {children}
+      {loading && loadingPos === 'right' && <IconLoading width="20" />}
+    </>
+  )
+
   if (as === 'a') {
     return (
-      <a {...injectedProps}>
+      <Link {...injectedProps}>
         {iconPos === 'left' && <Icon className={icon} />}
-        { children }
+        { content }
         {iconPos === 'right' && <Icon className={icon} />}
-      </a>
+      </Link>
     )
   }
 
   return (
-    <button {...injectedProps}>{ children }</button>
+    <button {...injectedProps}>{ content }</button>
   )
 }

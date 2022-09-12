@@ -1,10 +1,30 @@
-export default function PostItemHead(){
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import localeVi from 'dayjs/locale/vi';
+import { Link } from "react-router-dom"
+import { DEFAULT_AVATAR } from '../../constants'
+
+dayjs.extend(relativeTime);
+dayjs.locale(localeVi);
+
+export default function PostItemHead({
+    data
+}){
+    const createdDateObj = dayjs(data.added);
+    const dateRelative = createdDateObj.fromNow();
+    const link = '/postuser/' + data.userid
+
     return (
         <div className="ass1-section__head">
-            <a href="bai-viet-chi-tiet.html" className="ass1-section__avatar ass1-avatar"><img src="assets/images/avatar-02.png" alt="" /></a>
+            <Link to={link} className="ass1-section__avatar ass1-avatar">
+                <img src={data.avatar} alt={data.fullname} onError={(e) => {
+                    e.target.onerror = null
+                    e.target.src = DEFAULT_AVATAR
+                }} />
+            </Link>
             <div>
-                <a href="bai-viet-chi-tiet.html" className="ass1-section__name">Thanos</a>
-                <span className="ass1-section__passed">2 giờ trước</span>
+                <Link to={link} className="ass1-section__name">{data.fullname}</Link>
+                <span className="ass1-section__passed">{dateRelative}</span>
             </div>
         </div>
     )
