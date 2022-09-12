@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom"
 import Input from '../components/Shared/Input'
 import Button from '../components/Shared/Button'
 import { useEffect, useState } from 'react'
-import { validateFormRegister, getToken } from '../helpers'
+import { validateFormRegister, validateFileUpload, getToken } from '../helpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { actUpdateAsync } from '../store/auth/actions'
 import { DEFAULT_AVATAR } from "../constants"
@@ -15,13 +15,15 @@ export default function ProfilePage() {
     const [isFormDirty, setIsFormDirty] = useState(true)
     const [formError, setFormError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [previewImage, setPreviewImage] = useState(currentUser?.avatar)
+    const [file, setFile] = useState('')
 
     setTimeout(() => {
-        if(currentUser === undefined){
+        if (currentUser === undefined) {
             history.push('/login');
         }
     }, 1000)
-    
+
     const [formData, setFormData] = useState({
         fullname: {
             value: currentUser?.fullname,
@@ -29,10 +31,6 @@ export default function ProfilePage() {
         },
         gender: {
             value: currentUser?.gender,
-            error: ''
-        },
-        avatar: {
-            value: currentUser?.avatar,
             error: ''
         },
         description: {
@@ -73,13 +71,6 @@ export default function ProfilePage() {
                         name: 'gender'
                     })
                 },
-                avatar: {
-                    value: '',
-                    error: validateFormRegister({
-                        value: '',
-                        name: 'avatar'
-                    })
-                },
                 description: {
                     value: '',
                     error: validateFormRegister({
@@ -92,9 +83,22 @@ export default function ProfilePage() {
             return false;
         };
 
-        if (formData.fullname.error || formData.gender.error || formData.avatar.error || formData.description.error) return false;
+        if (formData.fullname.error || formData.gender.error || formData.description.error) return false;
 
         return true;
+    }
+
+    function handleChangeFile(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        let error = validateFileUpload(file);
+        if (error) {
+            alert(error);
+        } else {
+            setPreviewImage(URL.createObjectURL(file));
+        }
+        setFile(file);
+        setIsFormDirty(false);
     }
 
     function handleSubmit(evt) {
@@ -104,26 +108,26 @@ export default function ProfilePage() {
             console.log('form error');
             return;
         }
-        const { fullname, gender, avatar, description } = formData;
+        const { fullname, gender, description } = formData;
         if (loading) return;
         setLoading(true);
         setFormError('');
 
         const updateData = new FormData();
-        updateData.append('avatar', avatar.value);
+        updateData.append('avatar', file);
         updateData.append('fullname', fullname.value);
         updateData.append('description', description.value);
         updateData.append('gender', gender.value);
-        
+
         dispatch(actUpdateAsync(updateData, token)).
-        then(res => {
-            if (res.ok) {
-                history.push('/');
-            } else {
-                setFormError(res.error);
-                setLoading(false);
-            }
-        })
+            then(res => {
+                if (res.ok) {
+                    history.push('/');
+                } else {
+                    setFormError(res.error);
+                    setLoading(false);
+                }
+            })
     }
 
     return (
@@ -133,13 +137,13 @@ export default function ProfilePage() {
                     <p>Profile</p>
                     <div className="ass1-login__form">
                         <div className="avatar">
-                            <img src={formData.avatar.value} onError={(e) => {
-                                        e.target.onerror = null
-                                        e.target.src = DEFAULT_AVATAR
-                                    }} alt={formData.fullname.value} />
+                            <img src={previewImage} onError={(e) => {
+                                e.target.onerror = null
+                                e.target.src = DEFAULT_AVATAR
+                            }} alt={formData.fullname.value} />
                         </div>
                         <form onSubmit={handleSubmit} encType="multipart/form-data">
-                            { formError && <p className="form-login__error">{formError}</p> }
+                            {formError && <p className="form-login__error">{formError}</p>}
                             <Input
                                 type="text"
                                 placeholder="Tên hiển thị"
@@ -161,14 +165,14 @@ export default function ProfilePage() {
                             <Input
                                 type="file"
                                 className="form-control"
-                                error={formData.avatar?.error}
                                 name="avatar"
+                                onChange={handleChangeFile}
                             />
                             <Input
                                 typeForm="textarea"
                                 placeholder="Mô tả ngắn ..."
                                 className="form-control"
-                                cols={30} 
+                                cols={30}
                                 rows={5}
                                 defaultValue={formData.description?.value}
                                 error={formData.description?.error}

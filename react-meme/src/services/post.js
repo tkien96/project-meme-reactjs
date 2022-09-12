@@ -18,7 +18,7 @@ const postService = {
   getListByUserId(params, token) {
     return api.call().get('/post/getListPostUserID.php', {
       params: {
-        ...params,
+        ...params
       },
       headers: {
         "Authorization": `Bearer ${token}`
@@ -47,6 +47,13 @@ const postService = {
   },
   getPostByUserId({userid}, token = {}) {
     return postService.getListByUserId({userid}, token)
+  },
+  getPostByQuery(query) {
+    return api.call().get('/post/search.php', {
+      params: {
+        query: query
+      }
+    });
   },
   getPostDetail(postid) {
     return api.call().get('/post/post.php', {

@@ -20,7 +20,7 @@ export function mappingPostData(post) {
     content: {
       image: post?.url_image,
       content: post?.post_content,
-      status: post?.status,  
+      status: post?.status,
     },
     footer: {
       count: post?.count
@@ -30,16 +30,16 @@ export function mappingPostData(post) {
 
 export function mappingUser(user) {
   return {
-    id              : user?.USERID,
-    email           : user?.email,
-    fullname        : user?.fullname,
-    gender          : user?.gender,
-    description     : user?.description,
-    yourviewed      : user?.yourviewed,
-    profileviews    : user?.profileviews,
-    youviewed       : user?.youviewed,
-    avatar          : user?.profilepicture,
-    permission      : user?.permission
+    id: user?.USERID,
+    email: user?.email,
+    fullname: user?.fullname,
+    gender: user?.gender,
+    description: user?.description,
+    yourviewed: user?.yourviewed,
+    profileviews: user?.profileviews,
+    youviewed: user?.youviewed,
+    avatar: user?.profilepicture,
+    permission: user?.permission
   }
 }
 
@@ -96,6 +96,10 @@ export function validateFormRegister({ value, name }) {
     }
   }
 
+  if (name === 'description' && value.length >= 100) {
+    error = MESSAGE_FORM_ERROR.description_length;
+  }
+
   if (name === 'repassword') {
     if (!value) {
       error = MESSAGE_FORM_ERROR.password_required;
@@ -114,10 +118,6 @@ export function validateFormRegister({ value, name }) {
     }
   }
 
-  if (name === 'fullname' && !value) {
-    error = MESSAGE_FORM_ERROR.fullname_required;
-  }
-
   return error;
 }
 
@@ -128,6 +128,10 @@ export function validateEmail(email) {
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
 };
+
+export function validateFileUpload(file) {
+  
+}
 
 export function RegExpKey(title, keyword) {
   if (keyword !== '') {
@@ -140,8 +144,8 @@ export function RegExpKey(title, keyword) {
 export function sliceIntoChunks(arr, chunkSize) {
   const res = [];
   for (let i = 0; i < arr.length; i += chunkSize) {
-      const chunk = arr.slice(i, i + chunkSize);
-      res.push(chunk);
+    const chunk = arr.slice(i, i + chunkSize);
+    res.push(chunk);
   }
   return res;
 }

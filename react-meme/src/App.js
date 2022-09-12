@@ -41,14 +41,19 @@ function App() {
             <Header />
             <PostDetailPage />
           </Route>
+          <Route path="/search">
+            <Header />
+            <PostPage typePost={2} />
+            <Footer /> 
+          </Route>
           <Route path="/postuser/:id">
             <Header />
-            <PostPage profile={true} />
+            <PostPage typePost={1} />
             <Footer /> 
           </Route>
           <Route path="/categories/:id">
             <Header />
-            <PostPage profile={false} />
+            <PostPage typePost={0} />
             <Footer /> 
           </Route>
           <Route path="/login">

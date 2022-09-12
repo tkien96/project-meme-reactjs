@@ -2628,3 +2628,8 @@ select.form-control:focus {
 .currentUser i{  
   margin-left: 10px;
 }
+
+.title-search{
+  text-align: center;
+  margin: 20px 0 10px 0;
+}

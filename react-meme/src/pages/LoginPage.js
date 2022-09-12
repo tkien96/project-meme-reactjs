@@ -4,15 +4,21 @@ import Input from "../components/Shared/Input";
 
 import { useState } from 'react'
 import { validateFormData } from '../helpers'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { actLoginAsync } from '../store/auth/actions'
 
 export default function LoginPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const currentUser = useSelector(state => state.Auth.currentUser)
     const [isFormDirty, setIsFormDirty] = useState(true);
     const [formError, setFormError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    if(currentUser){
+        history.push('/')
+    }
+
     const [formData, setFormData] = useState({
         email: {
             value: '',

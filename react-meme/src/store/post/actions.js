@@ -68,6 +68,20 @@ export function actFetchPostByUserIdAsync({userid}, token) {
   }
 }
 
+export function actFetchPostByQueryAsync(query) {
+  return async (dispatch) => {
+    try {
+      const response = await postService.getPostByQuery(query)
+      const posts = response.data.posts.map(mappingPostData)
+      const currPage = 0
+      const copy = false
+      dispatch(actFetchPost({ posts, currPage, copy }))
+    } catch (err) {
+      // TODO 
+    }
+  }
+}
+
 export function actFetchDetailAsync({
   postid
 } = {}) {
