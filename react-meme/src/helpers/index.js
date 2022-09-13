@@ -88,6 +88,10 @@ export function validateFormRegister({ value, name }) {
     error = MESSAGE_FORM_ERROR.fullname_required;
   }
 
+  if (name === 'gender' && !value) {
+    error = MESSAGE_FORM_ERROR.gender_required;
+  }
+
   if (name === 'password') {
     if (!value) {
       error = MESSAGE_FORM_ERROR.password_required;
@@ -102,9 +106,9 @@ export function validateFormRegister({ value, name }) {
 
   if (name === 'repassword') {
     if (!value) {
-      error = MESSAGE_FORM_ERROR.password_required;
+      error = MESSAGE_FORM_ERROR.repassword_required;
     } else if (value.length < 6) {
-      error = MESSAGE_FORM_ERROR.password_length;
+      error = MESSAGE_FORM_ERROR.repassword_length;
     }
   }
 

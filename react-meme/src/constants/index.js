@@ -9,7 +9,10 @@ export const MESSAGE_FORM_ERROR = {
   rest_user_invalid_email   : 'Email không hợp lệ',
   password_required         : 'Mật khẩu không được rỗng',
   password_length           : 'Mật khẩu phaỉ hơn 6 ký tự',
+  repassword_required       : 'Xác nhận mật khẩu không được rỗng',
+  repassword_length         : 'Xác nhận mật khẩu phaỉ hơn 6 ký tự',
   description_length        : 'Mô tả không được vượt quá 100 ký tự',
   fullname_required         : 'Tên hiển thị không được rỗng',
+  gender_required           : 'Giới tính không được rỗng',
   default                   : 'Có lỗi xảy ra, vui lòng thử lại sau!'
 }

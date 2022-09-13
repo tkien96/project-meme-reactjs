@@ -1,12 +1,13 @@
 import PostItemContent from "./PostItemContent";
 import PostItemFooter from "./PostItemFooter";
 import PostItemHead from "./PostItemHead";
-// import PostItemFeeling from "./PostItemFeeling";
+import PostItemFeeling from "./PostItemFeeling";
 import cls from 'classnames'
 
 export default function PostItem({
     item,
-    classItem = null
+    classItem = null,
+    feeling
 }) {
     return (
         <div className={cls('ass1-section__item', {
@@ -17,7 +18,7 @@ export default function PostItem({
                     <PostItemHead data={item.header} />
                     <PostItemContent id={item.id} data={item.content} />
                     <PostItemFooter id={item.id} data={item.footer} />
-                    {/* <PostItemFeeling /> */}
+                    { feeling && <PostItemFeeling /> }
                 </div>
             }
         </div>
