@@ -45,7 +45,7 @@ const postService = {
       tagIndex
     })
   },
-  getPostByUserId({userid}, token = {}) {
+  getPostByUserId({userid}, token) {
     return postService.getListByUserId({userid}, token)
   },
   getPostByQuery(query) {
@@ -61,6 +61,15 @@ const postService = {
         postid: postid
       }
     });
+  },
+  upload(data, token) {
+    return api.call().post('/post/addNew.php', data, {
+        headers: {
+          "accept": "application/json, text/plain, */*, multipart/form-data",
+          "Authorization": `Bearer ${token}`
+        }
+      }
+    )
   }
 }
 

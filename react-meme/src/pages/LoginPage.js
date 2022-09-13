@@ -34,7 +34,6 @@ export default function LoginPage() {
         const name = evt.target.name;
         const value = evt.target.value.trim();
         const error = validateFormData({ value, name });
-
         setFormData({
             ...formData,
             [name]: {
@@ -115,8 +114,8 @@ export default function LoginPage() {
                             autoComplete="off"
                             required="required"
                             className="form-control"
-                            value={formData.email.value}
-                            error={formData.email.error}
+                            value={formData.email?.value}
+                            error={formData.email?.error}
                             name="email"
                             onChange={handleOnChange}
                         ></Input>
@@ -127,8 +126,8 @@ export default function LoginPage() {
                             autoComplete="off"
                             required="required"
                             className="form-control"
-                            value={formData.password.value}
-                            error={formData.password.error}
+                            value={formData.password?.value}
+                            error={formData.password?.error}
                             name="password"
                             onChange={handleOnChange}
                         ></Input>

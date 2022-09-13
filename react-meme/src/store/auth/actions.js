@@ -1,5 +1,5 @@
 import { authService } from "../../services/auth"
-import { mappingUser } from "../../helpers"
+import { mappingUser, getToken } from "../../helpers"
 // Action Type
 export const ACT_LOGIN = 'ACT_LOGIN';
 export const ACT_LOGOUT = 'ACT_LOGOUT';
@@ -106,9 +106,10 @@ export function actRegisterAsync({fullname, email, password, repassword}) {
   }
 }
 
-export function actUpdateAsync(updateData, token) {
+export function actUpdateAsync(updateData) {
   return async (dispatch) => {
     try {
+      const token = getToken()
       const response = await authService.update(updateData, token)
       const user = mappingUser(response.data.user)
       dispatch(actFetchMeAsync(token))

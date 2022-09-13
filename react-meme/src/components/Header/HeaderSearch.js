@@ -1,6 +1,7 @@
 import Input from '../Shared/Input'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 export default function HeaderSearch() {
     const history = useHistory()

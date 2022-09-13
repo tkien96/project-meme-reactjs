@@ -2,14 +2,13 @@ import { useHistory } from "react-router-dom"
 import Input from '../components/Shared/Input'
 import Button from '../components/Shared/Button'
 import { useEffect, useState } from 'react'
-import { validateFormRegister, validateFileUpload, getToken } from '../helpers'
+import { validateFormRegister, validateFileUpload } from '../helpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { actUpdateAsync } from '../store/auth/actions'
 import { DEFAULT_AVATAR } from "../constants"
 
 export default function ProfilePage() {
     const dispatch = useDispatch()
-    const token = getToken()
     const currentUser = useSelector(state => state.Auth.currentUser)
     const history = useHistory()
     const [isFormDirty, setIsFormDirty] = useState(true)
@@ -119,7 +118,7 @@ export default function ProfilePage() {
         updateData.append('description', description.value);
         updateData.append('gender', gender.value);
 
-        dispatch(actUpdateAsync(updateData, token)).
+        dispatch(actUpdateAsync(updateData)).
             then(res => {
                 if (res.ok) {
                     history.push('/');

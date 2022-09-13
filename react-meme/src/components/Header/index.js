@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom"
 import { Link } from "react-router-dom"
 import HeaderMenu from './HeaderMenu'
 import HeaderSearch from './HeaderSearch'
@@ -8,10 +9,12 @@ import { DEFAULT_AVATAR } from "../../constants"
 
 export default function Header() {
     const dispatch = useDispatch();
-    const currentUser = useSelector(state => state.Auth.currentUser);
+    const history = useHistory()
+    const currentUser = useSelector(state => state.Auth.currentUser)
     function handleLogout(e) {
         e.preventDefault();
         dispatch(actLogout());
+        history.push('/');
     }
     
     return (
@@ -21,7 +24,7 @@ export default function Header() {
                     <Link to="/" className="ass1-logo">TCL Meme</Link>
                     <HeaderMenu />
                     <HeaderSearch />
-                    <Button to="./upload" type="header" as="a" icon="icon-Upvote" iconPos="left">Upload</Button>
+                    <Button to="/upload" type="header" as="a" icon="icon-Upvote" iconPos="left">Upload</Button>
                     {
                         currentUser ? (
                             <div className="currentUser">

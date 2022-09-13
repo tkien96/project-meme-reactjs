@@ -14,7 +14,7 @@ export default  function HeaderMenu() {
                     items.map(item => {
                         let link = "/categories/" + item.id
                         return (
-                            <li key={item.id}>
+                            <li onClick={hiddenMenu} key={item.id}>
                                 <Link to={link}>{item.text}</Link>
                             </li>
                         )
@@ -22,6 +22,10 @@ export default  function HeaderMenu() {
                 }
             </ul>
         )
+    }
+
+    function hiddenMenu(e){
+        $(e.target).parents().find(".ass1-header__nav").hide();
     }
 
     function handleClickMenu(e){

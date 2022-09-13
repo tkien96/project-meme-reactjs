@@ -6,13 +6,12 @@ import { useEffect, useState } from "react"
 import { actFetchPostByCategoryAsync, actFetchPostByUserIdAsync, actFetchPostByQueryAsync } from "../store/post/actions"
 import Button from "../components/Shared/Button"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { getToken, getQueryStr } from '../helpers'
+import { getQueryStr } from '../helpers'
 
 export default function PostPage({
     typePost = false
 }) {
     const getParam = useParams()
-    const token = getToken()
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const { list: posts, currPage } = useSelector(state => state.Post.postPaging)
@@ -36,7 +35,7 @@ export default function PostPage({
                 setLoading(false)
             })
         }else if(typePost === 1){
-            dispatch(actFetchPostByUserIdAsync(params, token)).then(() => {
+            dispatch(actFetchPostByUserIdAsync(params)).then(() => {
                 setLoading(false)
             })
         }else if(typePost === 2){
@@ -54,7 +53,7 @@ export default function PostPage({
                     currPage: currPage + 1,
                     tagIndex: getParam.id
                 }
-                loadPost(params)
+                loadPost(params, typePost)
             }, 1000)
         }
     }

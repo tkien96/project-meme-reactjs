@@ -7,7 +7,7 @@ import RegisterPage from "./pages/RegisterPage"
 import ProfilePage from "./pages/ProfilePage"
 import PostPage from "./pages/PostPage"
 import PostDetailPage from "./pages/PostDetailPage"
-// import UploadPage from "./pages/UploadPage"
+import UploadPage from "./pages/UploadPgae"
 
 import {
   BrowserRouter,
@@ -21,22 +21,23 @@ import { actFetchMeAsync } from './store/auth/actions';
 import { getToken } from './helpers'
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const token = getToken()
+
   useEffect(() => {
-    dispatch(actFetchAllCategoriesAsync())
     dispatch(actFetchMeAsync(token))
+    dispatch(actFetchAllCategoriesAsync())
   }, [dispatch, token]);
 
   return (
     <BrowserRouter>
       <Loading />
         <Switch>
-          {/* <Route path="/upload">
+          <Route path="/upload">
             <Header />
             <UploadPage />
             <Footer /> 
-          </Route> */}
+          </Route>
           <Route path="/post/:id">
             <Header />
             <PostDetailPage />

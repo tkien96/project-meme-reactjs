@@ -1,5 +1,6 @@
 export const BASE_URL = process.env.REACT_APP_BASE_URL
 export const DEFAULT_AVATAR = '../assets/images/avatar-01.png'
+export const DEFAULT_AVAILABLE = '../assets/images/no_image_available.jpg'
 export const DATE_TEMPLATE = 'DD/MM/YYYY'
 export const DATE_DETAIL = 'dd, MM YYYY'
 
